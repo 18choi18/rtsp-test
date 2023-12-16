@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <style>
+      canvas {
+        width: 640px;
+        height: 480px;
+        margin-bottom: 10px;
+      }
+    </style>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jsmpeg/0.1/jsmpg.min.js"
+      integrity="sha512-RjZj0x/woErL9Kmb5Abs1yi8pAJtLEGTGe/KSoG13S47zSau28/AO+i/aaIev/djS3fkrGZHOkiYMR3mwJUX3A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <canvas id="cam1"></canvas>
+    <canvas id="cam2"></canvas>
+
+    <script type="text/javascript">
+      var client = new WebSocket("ws://localhost:9999");
+      var canvas = document.querySelector("#cam1");
+      var player = new jsmpeg(client, {
+        canvas: canvas,
+      });
+    </script>
+    <script type="text/javascript">
+      var client = new WebSocket("ws://localhost:10000");
+      var canvas = document.querySelector("#cam2");
+      var player = new jsmpeg(client, {
+        canvas: canvas,
+      });
+    </script>
+  </body>
+</html>

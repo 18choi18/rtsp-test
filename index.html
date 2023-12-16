@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+      canvas {
+        width: 600px;
+        height: 450px;
+        margin-bottom: 10px;
+      }
+    </style>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"
+      integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <canvas id="cam0"></canvas>
+    <canvas id="cam1"></canvas>
+
+    <script>
+      const socket = io();
+      const ids = ["cam0", "cam1"];
+
+      ids.forEach((id) => {
+        const canvas = document.querySelector(`#${id}`);
+        const socket = io(`${location.origin}/${id}`);
+        socket.on("data", function (data) {
+          var bytes = new Uint8Array(data);
+          var blob = new Blob([bytes], {
+            type: "application/octet-binary",
+          });
+          var url = URL.createObjectURL(blob);
+          var img = new Image();
+          var ctx = canvas.getContext("2d");
+          img.onload = function () {
+            URL.revokeObjectURL(url);
+            ctx.drawImage(img, 0, 0);
+          };
+
+          img.src = url;
+        });
+      });
+    </script>
+  </body>
+</html>

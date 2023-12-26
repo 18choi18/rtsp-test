@@ -14,10 +14,6 @@ const streams = cams.map((cam, index) => {
     wsPort: cam.port,
   });
 });
-console.log(
-  "🚀 ~ file: app.js:17 ~ streams ~ streams:",
-  streams.map((s) => s.pipe)
-);
 
 const app = express();
 const server = http.createServer(app);

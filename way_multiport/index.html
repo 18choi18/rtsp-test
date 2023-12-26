@@ -2,8 +2,8 @@
   <head>
     <style>
       canvas {
-        width: 640px;
-        height: 480px;
+        width: 600px;
+        aspect-ratio: 16/9;
         margin-bottom: 10px;
       }
     </style>
@@ -19,17 +19,16 @@
     <canvas id="cam2"></canvas>
 
     <script type="text/javascript">
-      var client = new WebSocket("ws://localhost:9999");
-      var canvas = document.querySelector("#cam1");
-      var player = new jsmpeg(client, {
-        canvas: canvas,
-      });
-    </script>
-    <script type="text/javascript">
-      var client = new WebSocket("ws://localhost:10000");
-      var canvas = document.querySelector("#cam2");
-      var player = new jsmpeg(client, {
-        canvas: canvas,
+      const cams = [
+        { id: 1, port: 9999 },
+        { id: 2, port: 10000 },
+      ];
+      cams.forEach((cam) => {
+        const client = new WebSocket("ws://localhost:" + cam.port);
+        const canvas = document.querySelector("#cam" + cam.id);
+        const player = new jsmpeg(client, {
+          canvas,
+        });
       });
     </script>
   </body>

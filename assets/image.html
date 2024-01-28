@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <style>
+      .map-wrap {
+        position: relative;
+        border: 1px solid black;
+      }
+
+      .map-wrap .map {
+        width: 100%;
+      }
+
+      .map-wrap .cctv {
+        position: absolute;
+        width: 20px;
+        /* width: 2.2%;  */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="map-wrap"></div>
+    <script>
+      // 지형도의 정보
+      const mapMeta = {
+        url: "https://images.saramingig.co.kr/product/X/J/7/XJ7I1jRZ5fJ4NUq.jpg/o2j/resize/900%3E",
+        width: 900,
+        height: 636,
+      };
+      // icon 의 좌측상단 점의 위치 { left: x축, top: y축 }
+      const cctvs = [
+        { left: 222, top: 300, url: "https://www.naver.com" },
+        { left: 140, top: 443, url: "https://www.naver.com" },
+      ];
+      const wrapper = document.querySelector(".map-wrap");
+
+      const map = document.createElement("img");
+      map.src = mapMeta.url;
+      map.className = "map";
+      map.width = mapMeta.width;
+      map.height = mapMeta.height;
+      wrapper.appendChild(map);
+
+      cctvs.forEach((item) => {
+        const img = document.createElement("img");
+        img.src = "/assets/cctv.png";
+        img.className = "cctv";
+        img.style.left = (item.left / mapMeta.width) * 100 + "%";
+        img.style.top = (item.top / mapMeta.height) * 100 + "%";
+        img.addEventListener("click", () =>
+          window.open(
+            item.url,
+            "_blank",
+            "width=700, height=700, top=100, left=200"
+          )
+        );
+        wrapper.appendChild(img);
+      });
+    </script>
+  </body>
+</html>
